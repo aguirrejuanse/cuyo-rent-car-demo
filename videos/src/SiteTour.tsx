@@ -42,7 +42,7 @@ const Phone: React.FC<{ src?: string; children?: React.ReactNode; delay?: number
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const s = spring({ frame: frame - delay, fps, config: { damping: 17, stiffness: 140 } });
-  const drift = interpolate(frame, [delay, delay + 100], [0, -14], { extrapolateRight: "clamp" });
+  const drift = interpolate(frame, [delay, delay + 130], [0, -18], { extrapolateRight: "clamp" });
 
   return (
     <div
@@ -105,29 +105,43 @@ const Scene: React.FC<{ n: string; label: string; title: string; sub: string; sr
   sub,
   src,
   wa,
-}) => (
-  <AbsoluteFill style={{ padding: "170px 60px 0" }}>
-    <Pop>
-      <Eyebrow n={n} label={label} />
-    </Pop>
-    <Pop delay={5} style={{ marginTop: 26 }}>
-      <H1 size={86}>{title}</H1>
-    </Pop>
-    <Pop delay={10} style={{ marginTop: 16 }}>
-      <div style={{ color: C.muted, fontSize: 34, fontWeight: 600, lineHeight: 1.3 }}>{sub}</div>
-    </Pop>
-    <div style={{ marginTop: 56 }}>
-      {wa ? <Phone delay={8}><WhatsAppMock /></Phone> : <Phone delay={8} src={src} />}
-    </div>
-  </AbsoluteFill>
-);
+}) => {
+  const frame = useCurrentFrame();
+  // Exit: whole scene slides up + fades so scenes flow instead of hard-cutting
+  const exit = interpolate(frame, [SCENE_FRAMES - 18, SCENE_FRAMES - 2], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return (
+    <AbsoluteFill
+      style={{
+        padding: "170px 60px 0",
+        opacity: 1 - exit,
+        transform: `translateY(${-90 * exit}px)`,
+      }}
+    >
+      <Pop>
+        <Eyebrow n={n} label={label} />
+      </Pop>
+      <Pop delay={8} style={{ marginTop: 26 }}>
+        <H1 size={86}>{title}</H1>
+      </Pop>
+      <Pop delay={14} style={{ marginTop: 16 }}>
+        <div style={{ color: C.muted, fontSize: 34, fontWeight: 600, lineHeight: 1.3 }}>{sub}</div>
+      </Pop>
+      <div style={{ marginTop: 56 }}>
+        {wa ? <Phone delay={12}><WhatsAppMock /></Phone> : <Phone delay={12} src={src} />}
+      </div>
+    </AbsoluteFill>
+  );
+};
 
 // Fake WhatsApp chat — "la reserva te llega así"
 const WhatsAppMock: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const b1 = spring({ frame: frame - 30, fps, config: { damping: 14, stiffness: 160 } });
-  const tick = spring({ frame: frame - 60, fps, config: { damping: 14, stiffness: 160 } });
+  const b1 = spring({ frame: frame - 45, fps, config: { damping: 14, stiffness: 160 } });
+  const tick = spring({ frame: frame - 85, fps, config: { damping: 14, stiffness: 160 } });
   return (
     <div style={{ position: "absolute", inset: 0, background: "#0b141a", padding: "90px 26px 26px", display: "flex", flexDirection: "column" }}>
       {/* WA header */}
@@ -193,38 +207,88 @@ const SCENES = [
   { n: "08", label: "Panel", title: "Y VOS VES\nCADA VENTA.", sub: "Origen, monto y comisión — venta por venta.", src: "shots/panel.png" },
 ];
 
-const INTRO = 105;
-const SCENE_FRAMES = 100;
-const OUTRO = 135;
+const INTRO = 160;
+const SCENE_FRAMES = 140;
+const OUTRO = 170;
+
+// Continuous progress bar across the scene block
+const Progress: React.FC = () => {
+  const frame = useCurrentFrame();
+  const p = interpolate(frame, [INTRO, INTRO + SCENES.length * SCENE_FRAMES], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return (
+    <div
+      style={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        height: 10,
+        width: "100%",
+        background: "rgba(255,255,255,0.07)",
+      }}
+    >
+      <div style={{ height: "100%", width: `${p * 100}%`, background: C.brand, borderRadius: "0 6px 6px 0" }} />
+    </div>
+  );
+};
+
+const IntroCard: React.FC = () => {
+  const frame = useCurrentFrame();
+  const exit = interpolate(frame, [INTRO - 18, INTRO - 2], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return (
+    <AbsoluteFill
+      style={{
+        padding: "0 70px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        gap: 40,
+        opacity: 1 - exit,
+        transform: `translateY(${-90 * exit}px)`,
+      }}
+    >
+      <Pop>
+        <div style={{ display: "flex", alignItems: "center", gap: 26 }}>
+          <Img src={staticFile("logo.webp")} style={{ width: 210, height: "auto" }} />
+        </div>
+      </Pop>
+      <Pop delay={14}>
+        <div style={{ color: C.brandLight, fontSize: 34, fontWeight: 800, letterSpacing: 6, textTransform: "uppercase" }}>
+          Para Cuyo Rent a Car
+        </div>
+      </Pop>
+      <Pop delay={28}>
+        <H1 size={104}>
+          AUTOMATIZÁ<br />TUS RESERVAS.
+        </H1>
+      </Pop>
+      <Pop delay={52}>
+        <H1 size={88}>
+          <span style={{ color: C.brand }}>TU WEB COTIZANDO 24/7.</span>
+        </H1>
+      </Pop>
+      <Pop delay={78}>
+        <div style={{ color: C.muted, fontSize: 36, fontWeight: 600, lineHeight: 1.4 }}>
+          Del click a la reserva confirmada — sin intervención.
+        </div>
+      </Pop>
+    </AbsoluteFill>
+  );
+};
 
 export const SiteTour: React.FC = () => (
   <BG>
     <Streaks />
+    <Progress />
 
     {/* Intro */}
     <Sequence durationInFrames={INTRO}>
-      <AbsoluteFill style={{ padding: "0 70px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 40 }}>
-        <Pop>
-          <div style={{ display: "flex", alignItems: "center", gap: 26 }}>
-            <Img src={staticFile("logo.webp")} style={{ width: 210, height: "auto" }} />
-          </div>
-        </Pop>
-        <Pop delay={10}>
-          <div style={{ color: C.brandLight, fontSize: 34, fontWeight: 800, letterSpacing: 6, textTransform: "uppercase" }}>
-            Cuyo, mirá esto
-          </div>
-        </Pop>
-        <Pop delay={18}>
-          <H1 size={108}>
-            TU CANAL DE<br />RESERVAS
-          </H1>
-        </Pop>
-        <Pop delay={30}>
-          <H1 size={108}>
-            <span style={{ color: C.brand }}>YA ESTÁ<br />ANDANDO.</span>
-          </H1>
-        </Pop>
-      </AbsoluteFill>
+      <IntroCard />
     </Sequence>
 
     {SCENES.map((s, i) => (
