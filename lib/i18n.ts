@@ -1,0 +1,547 @@
+export const LOCALES = ["es", "en", "pt"] as const;
+export type Locale = (typeof LOCALES)[number];
+export const DEFAULT_LOCALE: Locale = "es";
+
+export const LOCALE_LABELS: Record<Locale, string> = {
+  es: "Español",
+  en: "English",
+  pt: "Português",
+};
+
+const es = {
+  nav: {
+    fleet: "Flota",
+    benefits: "Beneficios",
+    reviews: "Opiniones",
+    faq: "Preguntas",
+    book: "Reservar",
+    panel: "Panel",
+  },
+  hero: {
+    badge: "Alquiler de autos en Mendoza",
+    titleA: "El mejor viaje",
+    titleB: "es el que está por venir",
+    subtitle:
+      "Entrega en el aeropuerto o tu hotel. Km ilimitados dentro de Mendoza. Sin vueltas: llegás y en 5 minutos estás manejando.",
+    cta: "Ver disponibilidad",
+    secondary: "Hablar por WhatsApp",
+  },
+  widget: {
+    pickup: "Lugar de retiro",
+    return: "Lugar de devolución",
+    pickupDate: "Retiro",
+    returnDate: "Devolución",
+    search: "Buscar autos",
+    locations: {
+      airport: "Aeropuerto MDZ",
+      downtown: "Centro de Mendoza",
+      hotel: "Mi hotel / alojamiento",
+    },
+  },
+  trust: {
+    rating: "en Google",
+    followers: "en Instagram",
+    km: "Km ilimitados",
+    delivery: "Entrega en 5 min",
+  },
+  fleet: {
+    title: "Conocé nuestra flota",
+    subtitle: "Autos nuevos, revisados y listos para recorrer Mendoza.",
+    perDay: "/día",
+    from: "desde",
+    book: "Reservar",
+    orSimilar: "o similar",
+    seats: "asientos",
+    bags: "valijas",
+    unlimited: "Km ilimitados",
+    categories: {
+      economy: "Económico",
+      compact: "Compacto",
+      intermediate: "Intermedio",
+      minivan: "Familiar 7 asientos",
+      pickup: "Pick-up 4x4",
+    },
+  },
+  benefits: {
+    title: "¿Por qué elegirnos?",
+    subtitle: "Los beneficios de reservar con nosotros",
+    items: [
+      {
+        title: "Cero burocracia",
+        desc: "No damos vueltas y valoramos tu tiempo. Llegás y te llevás el auto en 5 minutos.",
+      },
+      {
+        title: "Mejor precio",
+        desc: "Te garantizamos el mejor precio. Si encontrás uno más bajo, lo igualamos.",
+      },
+      {
+        title: "Garantía mínima",
+        desc: "Los únicos que aceptan la garantía en efectivo. No hace falta tarjeta de crédito.",
+      },
+    ],
+  },
+  destinations: {
+    title: "Mendoza te espera",
+    subtitle: "Rutas que valen el viaje. Con km ilimitados dentro de la provincia.",
+    items: [
+      { name: "Potrerillos", desc: "Dique, kayak y montaña", dist: "45 min" },
+      { name: "Valle de Uco", desc: "Bodegas de altura", dist: "1 h 15" },
+      { name: "Aconcagua", desc: "El techo de América", dist: "2 h 30" },
+      { name: "Cacheuta", desc: "Termas en precordillera", dist: "40 min" },
+      { name: "Villavicencio", desc: "Serpentina histórica", dist: "1 h" },
+      { name: "Cañón del Atuel", desc: "Paisaje único del sur", dist: "3 h" },
+    ],
+  },
+  reviews: {
+    title: "Lo que dicen quienes ya viajaron",
+    items: [
+      {
+        name: "Conii Cerezo",
+        text: "Una grandísima experiencia. El servicio me pareció excelente, el vehículo en perfectas condiciones y pudimos hacer el viaje tal cual lo planeamos.",
+      },
+      {
+        name: "Carlos Voqui",
+        text: "Muy buena la puntualidad de entrega y la predisposición de los chicos. Auto confortable, económico en combustible y precio accesible.",
+      },
+      {
+        name: "Nicole Depetris",
+        text: "Alquilamos la opción más económica y nos dieron un Toyota Etios. Recorrimos lugares hermosos sin inconvenientes y la garantía se devolvió sin problema.",
+      },
+    ],
+  },
+  faq: {
+    title: "Preguntas frecuentes",
+    items: [
+      {
+        q: "¿Dónde entregan los autos?",
+        a: "En el aeropuerto y en donde estés hospedado, con un costo extra.",
+      },
+      {
+        q: "¿Cómo funciona la garantía?",
+        a: "La garantía o franquicia es un seguro que se pide por si el vehículo sufre un siniestro. Respondés hasta el máximo de la garantía; el resto lo cubre el seguro.",
+      },
+      {
+        q: "¿Tienen km ilimitado?",
+        a: "Sí, dentro de Mendoza.",
+      },
+      {
+        q: "¿Cuáles son los requisitos para reservar?",
+        a: "Ser mayor de 18 años, licencia de conducir válida y vigente, y una tarjeta de crédito (también aceptamos garantía en efectivo).",
+      },
+      {
+        q: "¿Qué métodos de pago aceptan?",
+        a: "Tarjetas de crédito/débito y efectivo.",
+      },
+      {
+        q: "¿Hay depósito de seguridad?",
+        a: "Sí, $500.000 reembolsables. En tarjeta de crédito se libera automáticamente si el auto no presenta daños.",
+      },
+    ],
+  },
+  booking: {
+    title: "Reservá tu auto",
+    steps: ["Viaje", "Auto", "Extras", "Datos", "Confirmación"],
+    pickupPlace: "Lugar de retiro",
+    returnPlace: "Lugar de devolución",
+    pickupDate: "Fecha de retiro",
+    returnDate: "Fecha de devolución",
+    time: "Horario",
+    days: "días",
+    day: "día",
+    next: "Continuar",
+    back: "Volver",
+    selectCar: "Elegí tu auto",
+    extrasTitle: "Sumá extras",
+    extras: {
+      delivery: { name: "Entrega en hotel", desc: "Te lo llevamos donde estés", price: 15000 },
+      seat: { name: "Silla para niños", desc: "Homologada, hasta 4 años", price: 8000 },
+      driver: { name: "Conductor adicional", desc: "Segundo conductor habilitado", price: 10000 },
+      coverage: { name: "Cobertura plus", desc: "Reduce la franquicia al 50%", price: 12000 },
+    },
+    perDay: "/día",
+    once: "único",
+    driverTitle: "Tus datos",
+    name: "Nombre y apellido",
+    email: "Email",
+    phone: "Teléfono / WhatsApp",
+    license: "N° de licencia",
+    payment: "Método de pago",
+    paymentOpts: { card: "Tarjeta de crédito/débito", cash: "Efectivo al retirar" },
+    summary: "Resumen",
+    deposit: "Depósito reembolsable",
+    depositNote: "Se libera al devolver el auto sin daños",
+    total: "Total",
+    confirm: "Confirmar reserva",
+    confirmNote: "Sin cargo ahora — pagás al retirar el auto",
+    confirmedTitle: "¡Reserva confirmada!",
+    confirmedSub: "Te enviamos el detalle por WhatsApp y email.",
+    code: "Tu código de reserva",
+    manage: "Podés modificar o cancelar gratis hasta 24 h antes.",
+    backHome: "Volver al inicio",
+    tracked: "Reserva registrada y trackeada",
+  },
+  panel: {
+    badge: "Demo — panel de ventas",
+    title: "Cada reserva, trackeada.",
+    subtitle:
+      "Así se vería el panel con reservas reales: origen de cada venta, monto y comisión. Hoy todo se cierra por WhatsApp sin registro — acá cada venta tiene dueño.",
+    kpi: {
+      reservations: "Reservas",
+      revenue: "Facturación",
+      commission: "Comisión (10%)",
+      conversion: "Conversión",
+    },
+    table: {
+      code: "Código",
+      car: "Auto",
+      dates: "Fechas",
+      days: "Días",
+      total: "Total",
+      source: "Origen",
+      status: "Estado",
+    },
+    status: { confirmed: "Confirmada", pending: "Pendiente", completed: "Completada" },
+    sources: { instagram: "Instagram", tiktok: "TikTok", google: "Google Ads", direct: "Directo", whatsapp: "WhatsApp" },
+    note: "Las reservas que hagas en esta demo aparecen acá en tiempo real.",
+    empty: "Todavía no hay reservas desde esta demo.",
+  },
+  cta: {
+    title: "¿Listo para recorrer Mendoza?",
+    sub: "Reservá online en menos de 2 minutos. Sin vueltas.",
+    button: "Reservar ahora",
+  },
+  footer: {
+    tagline: "Alquiler de autos en Mendoza, Argentina.",
+    address: "Berutti 56, Mendoza",
+    rights: "Demo conceptual creada para Cuyo Rent a Car.",
+  },
+};
+
+export type Dict = typeof es;
+
+const en: Dict = {
+  nav: { fleet: "Fleet", benefits: "Benefits", reviews: "Reviews", faq: "FAQ", book: "Book now", panel: "Dashboard" },
+  hero: {
+    badge: "Car rental in Mendoza",
+    titleA: "The best trip",
+    titleB: "is the one yet to come",
+    subtitle:
+      "Delivery at the airport or your hotel. Unlimited km within Mendoza. No hassle: arrive and drive away in 5 minutes.",
+    cta: "Check availability",
+    secondary: "Chat on WhatsApp",
+  },
+  widget: {
+    pickup: "Pick-up location",
+    return: "Drop-off location",
+    pickupDate: "Pick-up",
+    returnDate: "Drop-off",
+    search: "Search cars",
+    locations: { airport: "MDZ Airport", downtown: "Downtown Mendoza", hotel: "My hotel / lodging" },
+  },
+  trust: {
+    rating: "on Google",
+    followers: "on Instagram",
+    km: "Unlimited km",
+    delivery: "5-min delivery",
+  },
+  fleet: {
+    title: "Meet our fleet",
+    subtitle: "New cars, serviced and ready to explore Mendoza.",
+    perDay: "/day",
+    from: "from",
+    book: "Book",
+    orSimilar: "or similar",
+    seats: "seats",
+    bags: "bags",
+    unlimited: "Unlimited km",
+    categories: {
+      economy: "Economy",
+      compact: "Compact",
+      intermediate: "Intermediate",
+      minivan: "Family 7-seater",
+      pickup: "Pick-up 4x4",
+    },
+  },
+  benefits: {
+    title: "Why choose us?",
+    subtitle: "Everything you get when booking with us",
+    items: [
+      { title: "Zero paperwork", desc: "No runaround — we value your time. Arrive and drive off in 5 minutes." },
+      { title: "Best price", desc: "Best price guaranteed. Find a lower one and we'll match it." },
+      { title: "Minimum deposit", desc: "The only ones who accept a cash deposit. No credit card needed." },
+    ],
+  },
+  destinations: {
+    title: "Mendoza awaits",
+    subtitle: "Roads worth the trip. Unlimited km within the province.",
+    items: [
+      { name: "Potrerillos", desc: "Dam, kayak & mountains", dist: "45 min" },
+      { name: "Uco Valley", desc: "High-altitude wineries", dist: "1 h 15" },
+      { name: "Aconcagua", desc: "The roof of the Americas", dist: "2 h 30" },
+      { name: "Cacheuta", desc: "Hot springs in the foothills", dist: "40 min" },
+      { name: "Villavicencio", desc: "Historic winding road", dist: "1 h" },
+      { name: "Atuel Canyon", desc: "One-of-a-kind south scenery", dist: "3 h" },
+    ],
+  },
+  reviews: {
+    title: "What travelers say",
+    items: [
+      {
+        name: "Conii Cerezo",
+        text: "A great experience. Excellent service, the vehicle in perfect condition, and we did the trip exactly as planned.",
+      },
+      {
+        name: "Carlos Voqui",
+        text: "Very good delivery punctuality and great attitude from the team. Comfortable, fuel-efficient car at a fair price.",
+      },
+      {
+        name: "Nicole Depetris",
+        text: "We booked the cheapest option and got a Toyota Etios. Drove beautiful places with no issues and the deposit was returned smoothly.",
+      },
+    ],
+  },
+  faq: {
+    title: "Frequently asked questions",
+    items: [
+      { q: "Where do you deliver the cars?", a: "At the airport and at your accommodation, for an extra fee." },
+      {
+        q: "How does the deposit work?",
+        a: "The deposit is a safety amount in case the vehicle is damaged. You're liable up to the deposit amount; insurance covers the rest.",
+      },
+      { q: "Is mileage unlimited?", a: "Yes, within Mendoza." },
+      {
+        q: "What do I need to book?",
+        a: "Be 18+, a valid driver's license, and a credit card (cash deposits also accepted).",
+      },
+      { q: "Which payment methods do you accept?", a: "Credit/debit cards and cash." },
+      {
+        q: "Is there a security deposit?",
+        a: "Yes, ARS 500,000 refundable. On credit card it's released automatically if the car returns undamaged.",
+      },
+    ],
+  },
+  booking: {
+    title: "Book your car",
+    steps: ["Trip", "Car", "Extras", "Details", "Confirmation"],
+    pickupPlace: "Pick-up location",
+    returnPlace: "Drop-off location",
+    pickupDate: "Pick-up date",
+    returnDate: "Drop-off date",
+    time: "Time",
+    days: "days",
+    day: "day",
+    next: "Continue",
+    back: "Back",
+    selectCar: "Choose your car",
+    extrasTitle: "Add extras",
+    extras: {
+      delivery: { name: "Hotel delivery", desc: "We bring it wherever you are", price: 15000 },
+      seat: { name: "Child seat", desc: "Certified, up to 4 years", price: 8000 },
+      driver: { name: "Additional driver", desc: "Second authorized driver", price: 10000 },
+      coverage: { name: "Plus coverage", desc: "Cuts the deductible by 50%", price: 12000 },
+    },
+    perDay: "/day",
+    once: "one-time",
+    driverTitle: "Your details",
+    name: "Full name",
+    email: "Email",
+    phone: "Phone / WhatsApp",
+    license: "License number",
+    payment: "Payment method",
+    paymentOpts: { card: "Credit/debit card", cash: "Cash at pick-up" },
+    summary: "Summary",
+    deposit: "Refundable deposit",
+    depositNote: "Released when the car returns undamaged",
+    total: "Total",
+    confirm: "Confirm booking",
+    confirmNote: "No charge now — pay when you pick up the car",
+    confirmedTitle: "Booking confirmed!",
+    confirmedSub: "We sent the details via WhatsApp and email.",
+    code: "Your booking code",
+    manage: "Free changes or cancellation up to 24 h before pick-up.",
+    backHome: "Back to home",
+    tracked: "Booking registered and tracked",
+  },
+  panel: {
+    badge: "Demo — sales dashboard",
+    title: "Every booking, tracked.",
+    subtitle:
+      "This is what the dashboard looks like with real bookings: source of every sale, amount and commission. Today everything closes on WhatsApp with no record — here every sale has an owner.",
+    kpi: { reservations: "Bookings", revenue: "Revenue", commission: "Commission (10%)", conversion: "Conversion" },
+    table: { code: "Code", car: "Car", dates: "Dates", days: "Days", total: "Total", source: "Source", status: "Status" },
+    status: { confirmed: "Confirmed", pending: "Pending", completed: "Completed" },
+    sources: { instagram: "Instagram", tiktok: "TikTok", google: "Google Ads", direct: "Direct", whatsapp: "WhatsApp" },
+    note: "Bookings made in this demo appear here in real time.",
+    empty: "No demo bookings yet.",
+  },
+  cta: { title: "Ready to explore Mendoza?", sub: "Book online in under 2 minutes. No hassle.", button: "Book now" },
+  footer: {
+    tagline: "Car rental in Mendoza, Argentina.",
+    address: "Berutti 56, Mendoza",
+    rights: "Concept demo built for Cuyo Rent a Car.",
+  },
+};
+
+const pt: Dict = {
+  nav: { fleet: "Frota", benefits: "Vantagens", reviews: "Avaliações", faq: "Dúvidas", book: "Reservar", panel: "Painel" },
+  hero: {
+    badge: "Aluguel de carros em Mendoza",
+    titleA: "A melhor viagem",
+    titleB: "é a que está por vir",
+    subtitle:
+      "Entrega no aeroporto ou no seu hotel. Km livre dentro de Mendoza. Sem burocracia: chegou, em 5 minutos você está dirigindo.",
+    cta: "Ver disponibilidade",
+    secondary: "Falar no WhatsApp",
+  },
+  widget: {
+    pickup: "Local de retirada",
+    return: "Local de devolução",
+    pickupDate: "Retirada",
+    returnDate: "Devolução",
+    search: "Buscar carros",
+    locations: { airport: "Aeroporto MDZ", downtown: "Centro de Mendoza", hotel: "Meu hotel / hospedagem" },
+  },
+  trust: { rating: "no Google", followers: "no Instagram", km: "Km livre", delivery: "Entrega em 5 min" },
+  fleet: {
+    title: "Conheça nossa frota",
+    subtitle: "Carros novos, revisados e prontos para explorar Mendoza.",
+    perDay: "/dia",
+    from: "a partir de",
+    book: "Reservar",
+    orSimilar: "ou similar",
+    seats: "lugares",
+    bags: "malas",
+    unlimited: "Km livre",
+    categories: {
+      economy: "Econômico",
+      compact: "Compacto",
+      intermediate: "Intermediário",
+      minivan: "Familiar 7 lugares",
+      pickup: "Picape 4x4",
+    },
+  },
+  benefits: {
+    title: "Por que escolher a gente?",
+    subtitle: "Tudo o que você ganha ao reservar conosco",
+    items: [
+      { title: "Zero burocracia", desc: "Sem enrolação — valorizamos seu tempo. Chegou e saiu dirigindo em 5 minutos." },
+      { title: "Melhor preço", desc: "Melhor preço garantido. Achou mais barato? A gente iguala." },
+      { title: "Caução mínima", desc: "Os únicos que aceitam caução em dinheiro. Não precisa de cartão de crédito." },
+    ],
+  },
+  destinations: {
+    title: "Mendoza te espera",
+    subtitle: "Estradas que valem a viagem. Km livre dentro da província.",
+    items: [
+      { name: "Potrerillos", desc: "Dique, caiaque e montanha", dist: "45 min" },
+      { name: "Valle de Uco", desc: "Vinícolas de altitude", dist: "1 h 15" },
+      { name: "Aconcágua", desc: "O teto das Américas", dist: "2 h 30" },
+      { name: "Cacheuta", desc: "Termas na pré-cordilheira", dist: "40 min" },
+      { name: "Villavicencio", desc: "Estrada histórica", dist: "1 h" },
+      { name: "Canyon del Atuel", desc: "Paisagem única do sul", dist: "3 h" },
+    ],
+  },
+  reviews: {
+    title: "Quem já viajou recomenda",
+    items: [
+      {
+        name: "Conii Cerezo",
+        text: "Uma experiência grandiosa. Serviço excelente, veículo em perfeitas condições e a viagem saiu exatamente como planejamos.",
+      },
+      {
+        name: "Carlos Voqui",
+        text: "Pontualidade na entrega e muita disposição da equipe. Carro confortável, econômico e com preço acessível.",
+      },
+      {
+        name: "Nicole Depetris",
+        text: "Alugamos a opção mais econômica e recebemos um Toyota Etios. Percorremos lugares lindos sem problemas e a caução foi devolvida tranquilo.",
+      },
+    ],
+  },
+  faq: {
+    title: "Perguntas frequentes",
+    items: [
+      { q: "Onde entregam os carros?", a: "No aeroporto e na sua hospedagem, com custo extra." },
+      {
+        q: "Como funciona a caução?",
+        a: "A caução é uma garantia caso o veículo sofra um sinistro. Você responde até o valor máximo da caução; o resto é coberto pelo seguro.",
+      },
+      { q: "O km é livre?", a: "Sim, dentro de Mendoza." },
+      {
+        q: "Quais os requisitos para reservar?",
+        a: "Ter mais de 18 anos, carteira de motorista válida e um cartão de crédito (também aceitamos caução em dinheiro).",
+      },
+      { q: "Quais formas de pagamento?", a: "Cartões de crédito/débito e dinheiro." },
+      {
+        q: "Tem depósito de segurança?",
+        a: "Sim, ARS 500.000 reembolsável. No cartão é liberado automaticamente se o carro voltar sem danos.",
+      },
+    ],
+  },
+  booking: {
+    title: "Reserve seu carro",
+    steps: ["Viagem", "Carro", "Extras", "Dados", "Confirmação"],
+    pickupPlace: "Local de retirada",
+    returnPlace: "Local de devolução",
+    pickupDate: "Data de retirada",
+    returnDate: "Data de devolução",
+    time: "Horário",
+    days: "dias",
+    day: "dia",
+    next: "Continuar",
+    back: "Voltar",
+    selectCar: "Escolha seu carro",
+    extrasTitle: "Adicione extras",
+    extras: {
+      delivery: { name: "Entrega no hotel", desc: "Levamos onde você estiver", price: 15000 },
+      seat: { name: "Cadeirinha infantil", desc: "Homologada, até 4 anos", price: 8000 },
+      driver: { name: "Motorista adicional", desc: "Segundo condutor habilitado", price: 10000 },
+      coverage: { name: "Cobertura plus", desc: "Reduz a franquia em 50%", price: 12000 },
+    },
+    perDay: "/dia",
+    once: "único",
+    driverTitle: "Seus dados",
+    name: "Nome completo",
+    email: "E-mail",
+    phone: "Telefone / WhatsApp",
+    license: "N° da carteira",
+    payment: "Forma de pagamento",
+    paymentOpts: { card: "Cartão de crédito/débito", cash: "Dinheiro na retirada" },
+    summary: "Resumo",
+    deposit: "Caução reembolsável",
+    depositNote: "Liberada ao devolver o carro sem danos",
+    total: "Total",
+    confirm: "Confirmar reserva",
+    confirmNote: "Sem cobrança agora — pague na retirada",
+    confirmedTitle: "Reserva confirmada!",
+    confirmedSub: "Enviamos os detalhes por WhatsApp e e-mail.",
+    code: "Seu código de reserva",
+    manage: "Alteração ou cancelamento grátis até 24 h antes.",
+    backHome: "Voltar ao início",
+    tracked: "Reserva registrada e rastreada",
+  },
+  panel: {
+    badge: "Demo — painel de vendas",
+    title: "Cada reserva, rastreada.",
+    subtitle:
+      "Assim seria o painel com reservas reais: origem de cada venda, valor e comissão. Hoje tudo fecha no WhatsApp sem registro — aqui cada venda tem dono.",
+    kpi: { reservations: "Reservas", revenue: "Faturamento", commission: "Comissão (10%)", conversion: "Conversão" },
+    table: { code: "Código", car: "Carro", dates: "Datas", days: "Dias", total: "Total", source: "Origem", status: "Status" },
+    status: { confirmed: "Confirmada", pending: "Pendente", completed: "Concluída" },
+    sources: { instagram: "Instagram", tiktok: "TikTok", google: "Google Ads", direct: "Direto", whatsapp: "WhatsApp" },
+    note: "As reservas feitas nesta demo aparecem aqui em tempo real.",
+    empty: "Ainda não há reservas nesta demo.",
+  },
+  cta: { title: "Pronto para explorar Mendoza?", sub: "Reserve online em menos de 2 minutos. Sem burocracia.", button: "Reservar agora" },
+  footer: {
+    tagline: "Aluguel de carros em Mendoza, Argentina.",
+    address: "Berutti 56, Mendoza",
+    rights: "Demo conceitual criada para Cuyo Rent a Car.",
+  },
+};
+
+export const dictionaries: Record<Locale, Dict> = { es, en, pt };
+
+export function getDict(locale: string): Dict {
+  return dictionaries[(LOCALES as readonly string[]).includes(locale) ? (locale as Locale) : DEFAULT_LOCALE];
+}
