@@ -33,6 +33,9 @@ Videos generados en `videos/out/` (1080×1920, 30fps):
 - `reserva-rapida.mp4` — 18s, muestra el flujo de reserva
 - `mendoza-te-espera.mp4` — 16s, aspiracional destinos + km ilimitados
 - `sin-vueltas.mp4` — 16s, propuestas de valor + precio ancla
+- `site-tour.mp4` — 35s, tour del sitio en mockup de teléfono (estilo pitch: "tu canal de reservas ya está andando") — el video para mostrarle al dueño
+
+`site-tour` usa screenshots reales de la demo capturados con Playwright (`node capture.mjs` → `videos/public/shots/`) y un chat de WhatsApp mockeado en la composición.
 
 ## Workflows del negocio actual (detectados)
 
