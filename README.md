@@ -1,52 +1,72 @@
-# Cuyo Rent a Car — Demo comercial
+# Cuyo Rent a Car — Demo
 
-Demo de sitio web + motor de reservas para [cuyorentacar.com](https://cuyorentacar.com), construida para presentar una propuesta de trabajo por comisión por venta.
+Trilingual marketing site + booking engine demo built for
+[cuyorentacar.com](https://cuyorentacar.com), a car rental company in
+Mendoza, Argentina. Includes a sales panel that attributes each mock
+reservation to its acquisition channel.
+
+**Live demo:** https://cuyo-rent-car-demo.vercel.app
+
+## What it does
+
+- **Trilingual landing** — ES / EN / PT (`/es`, `/en`, `/pt`): hero,
+  search widget, fleet, benefits, destinations, reviews, FAQ.
+- **Booking engine** — 5-step reservation flow issuing `CUY-XXXXXX`
+  confirmation codes.
+- **Sales panel** — every reservation made through the demo shows up with
+  its origin (Instagram / TikTok / Google via `utm_source`), amount and
+  commission — live sales-attribution demo with zero backend.
+- **Programmatic ad creatives** — four vertical videos (1080×1920, 30fps)
+  rendered with Remotion, including a site tour built from real
+  Playwright-captured screenshots inside a phone mockup.
+
+## Routes
+
+| Route | Content |
+|---|---|
+| `/es` | Landing: hero, search, fleet, benefits, destinations, reviews, FAQ |
+| `/es/reservar` | 5-step mock booking engine, `CUY-XXXXXX` code |
+| `/es/panel` | Sales panel: reservations, channel origin, 10% commission |
+
+Reservations persist in `localStorage` and surface in `/panel` — the
+attribution loop is demoable end to end in one browser.
 
 ## Stack
 
-- **Next.js 16** (App Router) + React 19 + Tailwind CSS 4
-- i18n propio: **ES / EN / PT** (`/es`, `/en`, `/pt`)
-- **Remotion 4** para los videos publicitarios (`videos/`)
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 ·
+Remotion 4 · pnpm
 
-## Sitio
+## Engineering notes
 
-| Ruta | Contenido |
-|---|---|
-| `/es` | Landing: hero, buscador, flota, beneficios, destinos, reviews, FAQ |
-| `/es/reservar` | Motor de reservas mock en 5 pasos con código `CUY-XXXXXX` |
-| `/es/panel` | Panel de ventas: reservas, origen (Instagram/TikTok/Google), comisión 10% |
+- **Custom i18n routing** — locale-prefixed routes (`/[locale]/…`) for
+  ES, EN and PT without a framework dependency.
+- **Channel attribution with no backend** — the `utm_source` param is
+  carried through the booking flow into the persisted reservation, so
+  every sale in `/panel` shows where it came from.
+- **Code-based reservations** — `CUY-XXXXXX` confirmation codes make the
+  flow feel real without a database.
+- **Video pipeline** — `videos/capture.mjs` drives Playwright to capture
+  real screenshots of the running demo into `videos/public/shots/`, which
+  the Remotion composition assembles into a phone-mockup site tour with a
+  mocked WhatsApp chat.
 
-Las reservas hechas en la demo se guardan en `localStorage` y aparecen en `/panel` — demuestra atribución de ventas en vivo.
-
-## Comandos
+## Getting started
 
 ```bash
-pnpm dev          # dev server
-pnpm build        # build producción
-cd videos && npm install
-npx remotion studio                        # preview de videos
-npx remotion render reserva-rapida out/reserva-rapida.mp4
+pnpm install
+pnpm dev         # http://localhost:3000
 ```
 
-Videos generados en `videos/out/` (1080×1920, 30fps):
+No environment variables needed.
 
-- `reserva-rapida.mp4` — 18s, muestra el flujo de reserva
-- `mendoza-te-espera.mp4` — 16s, aspiracional destinos + km ilimitados
-- `sin-vueltas.mp4` — 16s, propuestas de valor + precio ancla
-- `site-tour.mp4` — 35s, tour del sitio en mockup de teléfono (estilo pitch: "tu canal de reservas ya está andando") — el video para mostrarle al dueño
+### Videos
 
-`site-tour` usa screenshots reales de la demo capturados con Playwright (`node capture.mjs` → `videos/public/shots/`) y un chat de WhatsApp mockeado en la composición.
+```bash
+cd videos && npm install
+npx remotion studio                                        # preview
+npx remotion render reserva-rapida out/reserva-rapida.mp4  # render
+```
 
-## Workflows del negocio actual (detectados)
-
-1. **Adquisición**: Instagram (@cuyorentacar, 18.6K) + TikTok + Google → landing
-2. **Contacto**: 100% WhatsApp (`wa.link/y18li7` / wa.me/5492616534148) — el sitio NO tiene booking engine
-3. **Reserva**: manual por chat — sin trackeo de origen ni registro
-4. **Entrega**: aeropuerto MDZ o domicilio/hotel (costo extra)
-5. **Pago**: tarjeta crédito/débito, efectivo; promo Galicia 12 cuotas
-6. **Garantía**: depósito $500.000 reembolsable (diferencial: aceptan efectivo)
-7. **Post-venta**: WhatsApp para dudas/problemas durante el alquiler
-
-## El pitch
-
-Hoy **ninguna venta queda atribuida a un canal**: todo se cierra por chat. La demo muestra (a) un checkout online con código de reserva, (b) un panel donde cada venta tiene origen y monto — la base para cobrar % por venta trackeable.
+Renders land in `videos/out/`: `reserva-rapida` (18s, booking flow),
+`mendoza-te-espera` (16s, destinations), `sin-vueltas` (16s, value props
++ price anchor), `site-tour` (35s, full site tour in phone mockup).
